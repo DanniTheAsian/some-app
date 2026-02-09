@@ -8,6 +8,7 @@ const email = ref('')
 const userId = ref(null)
 const posts = ref([])
 const loading = ref(true)
+const username =ref('')
 
 const newTitle = ref('')
 const newContent = ref('')
@@ -50,6 +51,7 @@ const handleDelete = (id) => {
 onMounted(async () => {
   const me = await $fetch('/api/me', { credentials: 'include' })
   email.value = me.email
+  username.value = me.username
   userId.value = me.id
   await fetchPosts()
   loading.value = false
@@ -61,7 +63,7 @@ onMounted(async () => {
 
   <div v-else>
     <div class="topbar">
-      <h1>Velkommen {{ email }}</h1>
+      <h1>Velkommen {{ username }}</h1>
       <button class="logout" @click="logout">Log ud</button>
     </div>
 

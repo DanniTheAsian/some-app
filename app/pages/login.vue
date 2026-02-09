@@ -1,8 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -17,13 +14,14 @@ const login = async () => {
     await $fetch('/api/login', {
       method: 'POST',
       credentials: 'include',
-      body: {
-        email: email.value,
-        password: password.value
-      }
+      body: { email: email.value, password: password.value }
     })
 
-    router.push('/dashboard')
+    // ✅ verificér at du faktisk er logget ind
+    await $fetch('/api/me', { credentials: 'include' })
+
+    // ✅ Nuxt redirect
+    await navigateTo('/dashboard')
 
   } catch (error) {
     message.value = 'Login failed'
@@ -33,6 +31,7 @@ const login = async () => {
   }
 }
 </script>
+
 <template>
   <div class="auth-box">
     <h1>Login</h1>

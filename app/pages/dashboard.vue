@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import PostCard from '../components/PostCard.vue'
-
+import Nav from '../components/NavBar.vue'
+import NavBar from '../components/NavBar.vue'
 definePageMeta({ middleware: 'auth' })
 
 const email = ref('')
@@ -12,14 +13,6 @@ const username =ref('')
 
 const newTitle = ref('')
 const newContent = ref('')
-
-const logout = async () => {
-  await $fetch('/api/logout', {
-    method: 'POST',
-    credentials: 'include'
-  })
-  await navigateTo('/login')
-}
 
 const fetchPosts = async () => {
   posts.value = await $fetch('/api/posts', {
@@ -62,16 +55,8 @@ onMounted(async () => {
   <div v-if="loading">Loading...</div>
 
   <div v-else>
-    <div class="topbar">
-      <h1>Velkommen {{ username }}</h1>
-      <button class="logout" @click="logout">Log ud</button>
-    </div>
 
-    <div class="create">
-      <input v-model="newTitle" placeholder="Titel" />
-      <textarea v-model="newContent" placeholder="Skriv noget..." />
-      <button @click="createPost">Post</button>
-    </div>
+    <NavBar @refresh="fetchPosts" />
 
     <PostCard
       v-for="post in posts"
@@ -83,21 +68,3 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logout {
-  background: #444;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-
-.create {
-  margin: 20px 0;
-}
-</style>

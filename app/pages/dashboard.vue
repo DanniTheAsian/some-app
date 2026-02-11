@@ -57,8 +57,8 @@ onMounted(async () => {
   <div v-else>
 
     <NavBar @refresh="fetchPosts" />
-
-    <PostCard
+    <div class="post-wrapper">
+    <PostCard class="postcard"
       v-for="post in posts"
       :key="post.id"
       :post="post"
@@ -66,5 +66,18 @@ onMounted(async () => {
       @deleted="handleDelete"
     />
   </div>
+  </div>
 </template>
 
+<style scoped>
+  .post-wrapper {
+    justify-content: center;
+    margin-right: 500px;
+    margin-left: 500px;
+    margin-top: 40px;
+
+  }
+  .post-card {
+    margin: 10px;
+  }
+</style>

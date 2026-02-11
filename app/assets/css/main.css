@@ -1,9 +1,33 @@
 *, body {
     padding: 0;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     background: rgb(60, 16, 38);
 }
 
+
+input {
+  font-size: 20px;
+  background: none;
+  border: None;
+  width: 100%;
+  border-bottom:  solid 2px rgb(60, 16, 38);
+}
+
+button {
+  margin-top: 60px;
+  padding: 8px;
+   background: rgb(60, 16, 38);
+   border-radius: 20px;
+   color: white;
+   border: None;
+   font-size: 18px;
+}
+button:hover {
+   background: hotpink;
+   transition: 0.2s;
+   color: rgb(60, 16, 38);;
+}

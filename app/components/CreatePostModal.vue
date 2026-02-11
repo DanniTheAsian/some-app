@@ -25,7 +25,7 @@ const createPost = async () => {
     <div class="modal">
       <h2>Opret post</h2>
       <input v-model="title" placeholder="Titel" />
-      <textarea v-model="content" placeholder="Skriv noget..." />
+      <textarea v-model="content" placeholder="Skriv noget..." rows="5"></textarea>
       <button @click="createPost">Post</button>
     </div>
   </div>
@@ -41,9 +41,18 @@ const createPost = async () => {
   align-items: center;
 }
 .modal {
+  display: flex;
+  gap:20px;
+  flex-direction: column;
   background: white;
   padding: 20px;
   border-radius: 12px;
   width: 400px;
+}
+textarea {
+  width: 100%;
+  max-height: 200px;
+  resize: none;
+  font-family: inherit;
 }
 </style>

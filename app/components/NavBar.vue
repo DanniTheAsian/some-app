@@ -44,7 +44,7 @@ onMounted(fetchMe)
         justify-content: space-between;
         align-items: center;
         padding: 15px 15px;
-        background: rgb(29, 29, 29);
+        background: rgb(60, 16, 38);
         color: white;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         border-bottom: hotpink 2px solid;
@@ -58,5 +58,14 @@ onMounted(fetchMe)
 
     button {
         padding: 5px 10px;
+        background: hotpink;
+        color: rgb(29, 29, 29);
+        font-size: 14px;
+    }
+
+    button:hover {
+         background: rgb(153, 67, 110);
+         color:white;
+         transition: 0.2s;
     }
 </style>

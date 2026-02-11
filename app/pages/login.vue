@@ -35,7 +35,9 @@ const login = async () => {
 <template>
 <div class="wrapper">
   <div class="intro-text">
-    <h1>Velkommen til siden uden navn... <br>Jeg kan ikke finde på noget lige nu endnu</h1>
+    <h1>Velkommen til siden uden navn... <br>Jeg kan ikke finde på noget lige nu</h1>
+  
+    <p style="margin-top: 20px;">Dette er bare et hyggeprojekt, sååå slå dig løs!</p>
   </div>
   
   <div class="auth-box">
@@ -49,6 +51,10 @@ const login = async () => {
     </button>
 
     <p class="error">{{ message }}</p>
+
+    <p class="create-user">Psssst mangler du en bruger?</p>
+    <NuxtLink class="link-create" to="/register">Opret nu</NuxtLink>
+
   </div>
   </div>
   </div>
@@ -70,6 +76,7 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   margin: 30px;
+  padding: 80px 60px;
   background: hotpink ;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -91,7 +98,7 @@ button {
 .extra-wrapper {
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
+  row-gap: 20px;
   width: 70%;
 }
 
@@ -103,11 +110,33 @@ input {
 }
 .intro-text {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   color: white;
   font-size: 1.5rem;
   padding: 50px;
 
+}
+
+.create-user {
+  font-size: 15px;
+}
+.link-create {
+  display: flex;
+  flex-direction: row;
+  border-radius: 50px;
+  padding: 5px;
+  justify-content: center;
+  border: 2px solid rgb(60, 16, 38);
+  list-style: None;
+  text-decoration: None;
+
+}
+
+.link-create:hover {
+  color: white;
+  background: rgb(60, 16, 38);
+  border: 2px solid rgb(60, 16, 38);
+    transition: 0.2s;
 }
 </style>

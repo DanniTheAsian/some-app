@@ -26,11 +26,13 @@ let initialized = false
 
 watch(
   () => post.id,
-  (newId, oldId) => {
+  async (newId) => {
     if (!newId) return
 
     likes.value = post.likes
     liked.value = post.liked_by_me
+
+    comments.value = await fetchComments()   // 🔥 den mangler nu
   },
   { immediate: true }
 )

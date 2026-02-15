@@ -8,12 +8,12 @@ const username = ref('')
 const showModal = ref(false)
 
 const fetchMe = async () => {
-  const me = await $fetch('/api/me', { credentials: 'include' })
+  const me = await $fetch('/me', { credentials: 'include' })
   username.value = me.username
 }
 
 const logout = async () => {
-  await $fetch('/api/logout', { method: 'POST', credentials: 'include' })
+  await $fetch('/logout', { method: 'POST', credentials: 'include' })
   await navigateTo('/login')
 }
 

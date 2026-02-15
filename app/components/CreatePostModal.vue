@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { api } from '~/utils/api'
+import { api } from '~/utils/api.js'
 
 const emit = defineEmits(['close', 'created'])
 

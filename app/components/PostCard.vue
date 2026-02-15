@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { api } from '~/utils/api'
+import { api } from '~/utils/api.js'
 
 const { post, currentUserId } = defineProps({
   post: Object,

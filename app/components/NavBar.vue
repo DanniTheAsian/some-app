@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import CreatePostModal from './CreatePostModal.vue'
+import { api } from '~/utils/api.js'
+
 
 const username = ref('')
 const showModal = ref(false)

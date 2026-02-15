@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { api } from '~/utils/api'
+import { api } from '~/utils/api.js'
 
 const form = ref({
     username: '',

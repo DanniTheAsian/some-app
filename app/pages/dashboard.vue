@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { api } from '~/utils/api'
+import { api } from '~/utils/api.js'
 import PostCard from '../components/PostCard.vue'
 import Nav from '../components/NavBar.vue'
 import NavBar from '../components/NavBar.vue'

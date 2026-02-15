@@ -54,11 +54,12 @@ const cancelDelete = () => {
 const toggleLike = async () => {
   if (liked.value) {
     await api(`/likes/${post.id}`, { method: 'DELETE' })
-    likes.value--
   } else {
     await api(`/likes/${post.id}`, { method: 'POST' })
-    likes.value++
   }
+
+  // 🔑 spørg databasen bagefter
+  likes.value = await fetchLikeCount()
   liked.value = !liked.value
 }
 

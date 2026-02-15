@@ -61,17 +61,31 @@ const register = async () => {
     message.value = ''
 
     try {
-        const res = await api('/register', {
+        // 1️⃣ Opret bruger
+        await api('/register/', {
             method: 'POST',
             body: form.value
         })
-        message.value = res.message
-    }   catch(err) {
+
+        // 2️⃣ Login automatisk (sætter cookie)
+        await api('/login/', {
+            method: 'POST',
+            body: {
+                email: form.value.email,
+                password: form.value.password
+            }
+        })
+
+        // 3️⃣ Gå til dashboard
+        await navigateTo('/dashboard')
+
+    } catch(err) {
         message.value = 'Registration failed'
-    }   finally {
+    } finally {
         loading.value = false
     }
 }
+
 </script>
 
 <template>

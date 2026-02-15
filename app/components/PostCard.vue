@@ -15,10 +15,18 @@ const comments = ref([])
 const newComment = ref('')
 const showDeleteModal = ref(false)
 
+const fetchLiked = async () => {
+  const res = await api(`/likes/me/${post.id}`)
+  return res.liked
+}
+
+
+
 const fetchLikeCount = async () => {
   const res = await api(`/likes/count/${post.id}`)
   return res.likes
 }
+
 
 const fetchComments = async () => {
   return await api(`/comments/post/${post.id}`)
@@ -27,13 +35,14 @@ const fetchComments = async () => {
 /* 🔄 Init data når post ændrer sig */
 watch(
   () => post,
-  async (p) => {
-    likes.value = p.likes ?? await fetchLikeCount()
-    comments.value = p.comments ?? await fetchComments()
-    liked.value = p.liked_by_me ?? false
+  async () => {
+    likes.value = await fetchLikeCount()
+    comments.value = await fetchComments()
+    liked.value = await fetchLiked()
   },
   { immediate: true }
 )
+
 
 const deletePost = async () => {
   await api(`/posts/${post.id}`, {
@@ -58,10 +67,10 @@ const toggleLike = async () => {
     await api(`/likes/${post.id}`, { method: 'POST' })
   }
 
-  // 🔑 spørg databasen bagefter
   likes.value = await fetchLikeCount()
-  liked.value = !liked.value
+  liked.value = await fetchLiked()
 }
+
 
 const sendComment = async () => {
   if (!newComment.value.trim()) return

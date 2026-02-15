@@ -15,10 +15,7 @@ const comments = ref([])
 const newComment = ref('')
 const showDeleteModal = ref(false)
 
-const fetchLikeCount = async () => {
-  const res = await api(`/likes/count/${post.id}`)
-  return res.likes
-}
+
 
 const fetchComments = async () => {
   return await api(`/comments/post/${post.id}`)
@@ -28,18 +25,16 @@ const fetchComments = async () => {
 let initialized = false
 
 watch(
-  () => post,
-  async (p) => {
-    if (!p?.id || initialized) return
+  () => post.id,
+  (newId, oldId) => {
+    if (!newId) return
 
-    likes.value = p.likes ?? await fetchLikeCount()
-    comments.value = p.comments ?? await fetchComments()
-    liked.value = p.liked_by_me ?? false
-
-    initialized = true
+    likes.value = post.likes
+    liked.value = post.liked_by_me
   },
   { immediate: true }
 )
+
 
 
 const deletePost = async () => {
@@ -68,6 +63,7 @@ const toggleLike = async () => {
   }
   liked.value = !liked.value
 }
+
 
 const sendComment = async () => {
   if (!newComment.value.trim()) return

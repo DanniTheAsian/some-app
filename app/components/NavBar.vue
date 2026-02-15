@@ -13,7 +13,7 @@ const fetchMe = async () => {
 }
 
 const logout = async () => {
-  await $fetch('/logout', { method: 'POST', credentials: 'include' })
+  await api('/logout', { method: 'POST', credentials: 'include' })
   await navigateTo('/login')
 }
 

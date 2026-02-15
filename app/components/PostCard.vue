@@ -61,16 +61,36 @@ const cancelDelete = () => {
 }
 
 const toggleLike = async () => {
+
+  // 💡 Optimistic update først
   if (liked.value) {
-    await api(`/likes/${post.id}`, { method: 'DELETE' })
+    liked.value = false
+    likes.value--
   } else {
-    await api(`/likes/${post.id}`, { method: 'POST' })
+    liked.value = true
+    likes.value++
   }
 
-  likes.value = await fetchLikeCount()
-  liked.value = await fetchLiked()
-}
+  try {
+    if (liked.value) {
+      await api(`/likes/${post.value.id}`, { method: 'POST' })
+    } else {
+      await api(`/likes/${post.value.id}`, { method: 'DELETE' })
+    }
+  } catch (err) {
 
+    // ❌ rollback hvis backend fejler
+    if (liked.value) {
+      liked.value = false
+      likes.value--
+    } else {
+      liked.value = true
+      likes.value++
+    }
+
+    console.error("Like failed:", err)
+  }
+}
 
 const sendComment = async () => {
   if (!newComment.value.trim()) return

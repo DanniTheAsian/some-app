@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { api } from '~/utils/api'
 
 const emit = defineEmits(['close', 'created'])
 
@@ -9,10 +10,9 @@ const content = ref('')
 const createPost = async () => {
   if (!title.value || !content.value) return
 
-  await $fetch('/api/posts', {
+  await api('/posts', {
     method: 'POST',
-    body: { title: title.value, content: content.value },
-    credentials: 'include'
+    body: { title: title.value, content: content.value }
   })
 
   emit('created')

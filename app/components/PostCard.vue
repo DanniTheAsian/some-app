@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { api } from '~/utils/api'
 
 const { post, currentUserId } = defineProps({
   post: Object,
@@ -15,12 +16,12 @@ const newComment = ref('')
 const showDeleteModal = ref(false)
 
 const fetchLikeCount = async () => {
-  const res = await $fetch(`/api/likes/count/${post.id}`)
+  const res = await api(`/likes/count/${post.id}`)
   return res.likes
 }
 
 const fetchComments = async () => {
-  return await $fetch(`/api/comments/post/${post.id}`)
+  return await api(`/comments/post/${post.id}`)
 }
 
 /* 🔄 Init data når post ændrer sig */
@@ -35,9 +36,8 @@ watch(
 )
 
 const deletePost = async () => {
-  await $fetch(`/api/posts/${post.id}`, {
-    method: 'DELETE',
-    credentials: 'include'
+  await api(`/posts/${post.id}`, {
+    method: 'DELETE'
   })
   emit('deleted', post.id)
   showDeleteModal.value = false
@@ -53,10 +53,10 @@ const cancelDelete = () => {
 
 const toggleLike = async () => {
   if (liked.value) {
-    await $fetch(`/api/likes/${post.id}`, { method: 'DELETE' })
+    await api(`/likes/${post.id}`, { method: 'DELETE' })
     likes.value--
   } else {
-    await $fetch(`/api/likes/${post.id}`, { method: 'POST' })
+    await api(`/likes/${post.id}`, { method: 'POST' })
     likes.value++
   }
   liked.value = !liked.value
@@ -65,7 +65,7 @@ const toggleLike = async () => {
 const sendComment = async () => {
   if (!newComment.value.trim()) return
 
-  const comment = await $fetch('/api/comments', {
+  const comment = await api('/comments', {
     method: 'POST',
     body: { post_id: post.id, content: newComment.value }
   })

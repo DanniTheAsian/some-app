@@ -8,11 +8,14 @@ export default defineNuxtConfig({
     port: 3000
   },
 
+  
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8000'
+      apiBase: 'http://localhost:8000',
+      API_BASE_URL: ''
     }
-  },
+  }, 
+
 
   nitro: {
     routeRules: {

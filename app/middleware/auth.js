@@ -7,9 +7,11 @@
   }
 })*/
 
+import { api } from '~/utils/api'
+
 export default defineNuxtRouteMiddleware(async () => {
   try {
-    await $fetch('http://localhost:8000/me', { credentials: 'include' })
+    await api('/me')
   } catch {
     return navigateTo('/login')
   }

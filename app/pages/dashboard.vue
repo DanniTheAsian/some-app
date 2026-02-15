@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { api } from '~/utils/api'
 import PostCard from '../components/PostCard.vue'
 import Nav from '../components/NavBar.vue'
 import NavBar from '../components/NavBar.vue'
@@ -15,21 +16,18 @@ const newTitle = ref('')
 const newContent = ref('')
 
 const fetchPosts = async () => {
-  posts.value = await $fetch('/api/posts', {
-    credentials: 'include'
-  })
+  posts.value = await api('/posts')
 }
 
 const createPost = async () => {
   if (!newTitle.value || !newContent.value) return
 
-  await $fetch('/api/posts', {
+  await api('/posts', {
     method: 'POST',
     body: {
       title: newTitle.value,
       content: newContent.value
-    },
-    credentials: 'include'
+    }
   })
 
   newTitle.value = ''
@@ -42,7 +40,7 @@ const handleDelete = (id) => {
 }
 
 onMounted(async () => {
-  const me = await $fetch('/api/me', { credentials: 'include' })
+  const me = await api('/me')
   email.value = me.email
   username.value = me.username
   userId.value = me.id

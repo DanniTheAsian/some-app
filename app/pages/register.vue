@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { api } from '~/utils/api'
 
 const form = ref({
     username: '',
@@ -60,7 +61,7 @@ const register = async () => {
     message.value = ''
 
     try {
-        const res = await $fetch('http://127.0.0.1:8000/register', {
+        const res = await api('/register', {
             method: 'POST',
             body: form.value
         })

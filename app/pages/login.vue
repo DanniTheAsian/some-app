@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { api } from '~/utils/api'
 
 const email = ref('')
 const password = ref('')
@@ -11,14 +12,13 @@ const login = async () => {
   message.value = ''
 
   try {
-    await $fetch('/api/login', {
+    await api('/login', {
       method: 'POST',
-      credentials: 'include',
       body: { email: email.value, password: password.value }
     })
 
     // ✅ verificér at du faktisk er logget ind
-    await $fetch('/api/me', { credentials: 'include' })
+    await api('/me')
 
     // ✅ Nuxt redirect
     await navigateTo('/dashboard')

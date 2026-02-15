@@ -15,30 +15,28 @@ const comments = ref([])
 const newComment = ref('')
 const showDeleteModal = ref(false)
 
-const fetchLiked = async () => {
-  const res = await api(`/likes/me/${post.id}`)
-  return res.liked
-}
-
-
-
 const fetchLikeCount = async () => {
   const res = await api(`/likes/count/${post.id}`)
   return res.likes
 }
-
 
 const fetchComments = async () => {
   return await api(`/comments/post/${post.id}`)
 }
 
 /* 🔄 Init data når post ændrer sig */
+let initialized = false
+
 watch(
   () => post,
-  async () => {
-    likes.value = await fetchLikeCount()
-    comments.value = await fetchComments()
-    liked.value = await fetchLiked()
+  async (p) => {
+    if (!p?.id || initialized) return
+
+    likes.value = p.likes ?? await fetchLikeCount()
+    comments.value = p.comments ?? await fetchComments()
+    liked.value = p.liked_by_me ?? false
+
+    initialized = true
   },
   { immediate: true }
 )
@@ -61,35 +59,14 @@ const cancelDelete = () => {
 }
 
 const toggleLike = async () => {
-
-  // 💡 Optimistic update først
   if (liked.value) {
-    liked.value = false
+    await api(`/likes/${post.id}`, { method: 'DELETE' })
     likes.value--
   } else {
-    liked.value = true
+    await api(`/likes/${post.id}`, { method: 'POST' })
     likes.value++
   }
-
-  try {
-    if (liked.value) {
-      await api(`/likes/${post.value.id}`, { method: 'POST' })
-    } else {
-      await api(`/likes/${post.value.id}`, { method: 'DELETE' })
-    }
-  } catch (err) {
-
-    // ❌ rollback hvis backend fejler
-    if (liked.value) {
-      liked.value = false
-      likes.value--
-    } else {
-      liked.value = true
-      likes.value++
-    }
-
-    console.error("Like failed:", err)
-  }
+  liked.value = !liked.value
 }
 
 const sendComment = async () => {

@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 import { api } from '~/utils/api.js'
 
-const email = ref('')
+const identifier = ref('')
+
 const password = ref('')
 const message = ref('')
 const loading = ref(false)
@@ -14,7 +15,7 @@ const login = async () => {
   try {
     await api('/login', {
       method: 'POST',
-      body: { email: email.value, password: password.value }
+      body: { identifier: identifier.value, password: password.value }
     })
 
     // ✅ verificér at du faktisk er logget ind
@@ -43,17 +44,22 @@ const login = async () => {
   <div class="auth-box">
     <div class="extra-wrapper">
     <h2>Her kan du logge ind.. <br>hvis du ikke vidste det :)</h2>
-    <input type="email" v-model="email" placeholder="Email" />
-    <input v-model="password" type="password" placeholder="Password" />
+  <form style="display: flex; flex-direction: column; row-gap: 30px;" @submit.prevent="login">
+  <input 
+    v-model="identifier" 
+    placeholder="Email eller brugernavn" 
+  />
 
-    <button @click="login" :disabled="loading">
-      {{ loading ? 'Logger ind...' : 'Login' }}
-    </button>
+  <input 
+    v-model="password" 
+    type="password" 
+    placeholder="Password" 
+  />
 
-    <p class="error">{{ message }}</p>
-
-    <p class="create-user">Psssst mangler du en bruger?</p>
-    <NuxtLink class="link-create" to="/register">Opret nu</NuxtLink>
+  <button type="submit" :disabled="loading">
+    {{ loading ? 'Logger ind...' : 'Login' }}
+  </button>
+</form>
 
   </div>
   </div>

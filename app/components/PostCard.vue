@@ -65,7 +65,7 @@ const toggleLike = async () => {
 const sendComment = async () => {
   if (!newComment.value.trim()) return
 
-  const comment = await api('/comments', {
+  const comment = await api('/comments/', {
     method: 'POST',
     body: { post_id: post.id, content: newComment.value }
   })

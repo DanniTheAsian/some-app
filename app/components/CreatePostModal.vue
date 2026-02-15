@@ -10,7 +10,7 @@ const content = ref('')
 const createPost = async () => {
   if (!title.value || !content.value) return
 
-  await api('/posts', {
+  await api('/posts/', {
     method: 'POST',
     body: { title: title.value, content: content.value }
   })

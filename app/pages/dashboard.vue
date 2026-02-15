@@ -16,7 +16,7 @@ const newTitle = ref('')
 const newContent = ref('')
 
 const fetchPosts = async () => {
-  posts.value = await api('/posts')
+  posts.value = await api('/posts/')
 }
 
 const createPost = async () => {

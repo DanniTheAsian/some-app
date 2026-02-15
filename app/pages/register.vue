@@ -62,13 +62,13 @@ const register = async () => {
 
     try {
         // 1️⃣ Opret bruger
-        await api('/register/', {
+        await api('/register', {
             method: 'POST',
             body: form.value
         })
 
         // 2️⃣ Login automatisk (sætter cookie)
-        await api('/login/', {
+        await api('/login', {
             method: 'POST',
             body: {
                 email: form.value.email,

@@ -38,7 +38,7 @@ const login = async () => {
 <template>
 <div class="wrapper">
   <div class="intro-text">
-    <h1>Velkommen til siden uden navn... <br>Jeg kan ikke finde på noget lige nu</h1>
+    <h1>Velkommen til DingDong..<br>Hvor du siger noget – og nogen kan svare-ish</h1>
   
     <p style="margin-top: 20px;">Dette er bare et hyggeprojekt, sååå slå dig løs!</p>
   </div>
@@ -64,7 +64,7 @@ const login = async () => {
 </form>
     <div style="display: flex; flex-direction: column; gap:10px; margin-top: 40px;">
         <p style="text-align: center;">psssst har du ikke en bruger? </p>
-            <NuxtLink class="link-create" to="/register">Opret her</NuxtLink>
+            <NuxtLink class="link-create" to="/register">Opret dig her</NuxtLink>
 
     </div>
   </div>

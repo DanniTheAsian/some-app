@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { api } from '~/utils/api.js'
-
+import { useSound } from '@vueuse/sound'
 const form = ref({
     username: '',
     email: '',
@@ -13,6 +13,7 @@ const form = ref({
 const message = ref('')
 const loading = ref(false)
 
+const { play } = useSound('sounds/361564__matthewwong__ding-dong.wav')
 const touched = ref({
     username: false,
     email: false,
@@ -66,6 +67,7 @@ const register = async () => {
             method: 'POST',
             body: form.value
         })
+        play()
 
         // 2️⃣ Login automatisk (sætter cookie)
         await api('/login', {
@@ -93,6 +95,7 @@ const register = async () => {
   <div class="user-create-wrapper">
     <div>
     <h2 style="text-align: center;">Ey! Få oprettet en sej bruger...eller noget</h2>
+    <br>
     <p style="text-align: center;">Det er helt gratis... næsten</p>
     </div>
 
@@ -202,5 +205,31 @@ button:disabled {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+@media only screen and (max-width:980px) {
+    .wrapper {
+    font-family: segoe;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    
+}
+
+.user-create-wrapper {
+    background: hotpink;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 50px;
+    border-radius: 20px;
+}
+
 }
 </style>

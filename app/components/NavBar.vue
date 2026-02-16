@@ -28,7 +28,7 @@ onMounted(fetchMe)
 </script>
 <template>
     <nav class="navbar">
-        <div class="log">Jeg ved ikke hvad den skal hedde endnu</div>
+        <div class="log">DINGDONG</div>
 
         <div class="name-and-logout-wrapper">
             <div v-if="!loading && username" class="user">

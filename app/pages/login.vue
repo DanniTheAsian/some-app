@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { api } from '~/utils/api.js'
 
+console.log(useRuntimeConfig().public.API_BASE_URL)
+
 const identifier = ref('')
 
 const password = ref('')
@@ -60,7 +62,11 @@ const login = async () => {
     {{ loading ? 'Logger ind...' : 'Login' }}
   </button>
 </form>
+    <div style="display: flex; flex-direction: column; gap:10px; margin-top: 40px;">
+        <p style="text-align: center;">psssst har du ikke en bruger? </p>
+            <NuxtLink class="link-create" to="/register">Opret her</NuxtLink>
 
+    </div>
   </div>
   </div>
   </div>
@@ -145,4 +151,38 @@ input {
   border: 2px solid rgb(60, 16, 38);
     transition: 0.2s;
 }
+
+@media only screen and (max-width:980px) {
+  .wrapper {
+  display: grid;
+  grid-template-columns:  1fr; 
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+  .extra-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+  .auth-box {
+ 
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  padding: 0px 60px;
+  background: hotpink ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+}
+
+
 </style>

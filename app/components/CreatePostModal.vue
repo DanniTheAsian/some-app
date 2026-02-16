@@ -1,12 +1,16 @@
 <script setup>
 import { ref } from 'vue'
 import { api } from '~/utils/api.js'
+import { useSound } from '@vueuse/sound'
+
 
 const emit = defineEmits(['close', 'created'])
+
 
 const title = ref('')
 const content = ref('')
 
+const { play } = useSound('/sounds/611111__5ro4__bell-ding-3.wav')
 const createPost = async () => {
   if (!title.value || !content.value) return
 
@@ -15,6 +19,7 @@ const createPost = async () => {
     body: { title: title.value, content: content.value }
   })
 
+  play() 
   emit('created')
   emit('close')
 }
@@ -29,6 +34,8 @@ const createPost = async () => {
       <button @click="createPost">Post</button>
     </div>
   </div>
+
+
 </template>
 
 <style scoped>

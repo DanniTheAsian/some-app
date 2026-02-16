@@ -98,7 +98,7 @@ const sendComment = async () => {
     <p>{{ post.content }}</p>
 
     <div class="actions">
-      <button  style="width: 10%;" @click="toggleLike">
+      <button class="like" @click="toggleLike">
         {{ liked ? '💔' : '❤️' }} {{ likes }}
       </button>
              <input
@@ -135,7 +135,10 @@ const sendComment = async () => {
 
 
 <style>
-
+  
+  .like {
+    width: 10%;
+  }
   h2 {
     margin: 0;
     padding: 0;
@@ -272,5 +275,11 @@ const sendComment = async () => {
   }
   .comment:first-child {
     border-top: none;
+  }
+
+  @media only screen and (max-width:980px) {
+    .like{
+      width: 20%;
+    }
   }
 </style>

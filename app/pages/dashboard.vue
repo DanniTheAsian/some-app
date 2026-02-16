@@ -78,4 +78,10 @@ onMounted(async () => {
   .post-card {
     margin: 10px;
   }
+  @media only screen and (max-width:980px) {
+    .post-wrapper {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
 </style>

@@ -27,8 +27,14 @@ const login = async () => {
     await navigateTo('/dashboard')
 
   } catch (error) {
-    message.value = 'Login failed'
-    console.error('Login error:', error)
+  console.error('Login error:', error)
+
+  if (error?.data?.detail) {
+    message.value = error.data.detail
+  } else {
+    message.value = 'Forkert brugernavn eller adgangskode'
+  }
+
   } finally {
     loading.value = false
   }
@@ -47,7 +53,9 @@ const login = async () => {
     <div class="extra-wrapper">
     <h2>Her kan du logge ind.. <br>hvis du ikke vidste det :)</h2>
   <form style="display: flex; flex-direction: column; row-gap: 30px;" @submit.prevent="login">
-  <input 
+
+  
+    <input 
     v-model="identifier" 
     placeholder="Email eller brugernavn" 
   />
@@ -57,7 +65,9 @@ const login = async () => {
     type="password" 
     placeholder="Password" 
   />
-
+  <p v-if="message" class="error-msg">
+  {{ message }}
+</p>
   <button type="submit" :disabled="loading">
     {{ loading ? 'Logger ind...' : 'Login' }}
   </button>
@@ -177,7 +187,7 @@ input {
   justify-content: center;
   align-items: center;
   margin: 30px;
-  padding: 0px 60px;
+  padding: 30px 60px;
   background: hotpink ;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

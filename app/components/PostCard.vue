@@ -21,17 +21,6 @@ const fetchComments = async () => {
 }
 
 
-watch(
-  () => post.id,
-  async (newId) => {
-    if (!newId || !clientReady.value) return
-
-    likes.value = post.likes
-    liked.value = post.liked_by_me
-
-    comments.value = await fetchComments()
-  }
-)
 
 const fetchLiked = async () => {
   const res = await api(`/likes/me/${post.id}`)
@@ -74,10 +63,14 @@ const toggleLike = async () => {
 onMounted(async () => {
   clientReady.value = true
 
-  if (post.id) {
+  if (!post.id) return
+
+  try {
     comments.value = await fetchComments()
     likes.value = await fetchLikeCount()
     liked.value = await fetchLiked()
+  } catch (err) {
+    console.log("Fetch failed on client:", err)
   }
 })
 

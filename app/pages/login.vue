@@ -15,30 +15,35 @@ const login = async () => {
   message.value = ''
 
   try {
-    await api('/login', {
+    const res = await api('/login', {
       method: 'POST',
-      body: { identifier: identifier.value, password: password.value }
+      body: {
+        identifier: identifier.value,
+        password: password.value
+      }
     })
 
-    // ✅ verificér at du faktisk er logget ind
+    localStorage.setItem('token', res.access_token)
+
+    // 🧪 Test at token virker
     await api('/me')
 
-    // ✅ Nuxt redirect
     await navigateTo('/dashboard')
 
   } catch (error) {
-  console.error('Login error:', error)
+    console.error('Login error:', error)
 
-  if (error?.data?.detail) {
-    message.value = error.data.detail
-  } else {
-    message.value = 'Forkert brugernavn eller adgangskode'
-  }
+    if (error?.data?.detail) {
+      message.value = error.data.detail
+    } else {
+      message.value = 'Forkert brugernavn eller adgangskode'
+    }
 
   } finally {
     loading.value = false
   }
 }
+
 </script>
 
 <template>

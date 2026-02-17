@@ -6,6 +6,7 @@ import { api } from '~/utils/api.js'
 
 const username = ref('')
 const showModal = ref(false)
+const loading = ref(true)
 
 const fetchMe = async () => {
   try {
@@ -13,6 +14,8 @@ const fetchMe = async () => {
     username.value = me.username
   } catch (err) {
     console.log("Not logged in")
+    localStorage.removeItem('token')
+    await navigateTo('/login')
   } finally {
     loading.value = false
   }
@@ -20,9 +23,10 @@ const fetchMe = async () => {
 
 
 const logout = async () => {
-  await api('/logout', { method: 'POST', credentials: 'include' })
+  localStorage.removeItem('token')
   await navigateTo('/login')
 }
+
 
 onMounted(fetchMe)
 </script>

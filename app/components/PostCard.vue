@@ -14,18 +14,13 @@ const liked = ref(false)
 const comments = ref([])
 const newComment = ref('')
 const showDeleteModal = ref(false)
-const clientReady = ref(false)   // ✅ NY
+const clientReady = ref(false)   
 
 const fetchComments = async () => {
   return await api(`/comments/post/${post.id}`)
 }
 
-// ✅ Vent til client er mounted (localStorage findes)
-onMounted(() => {
-  clientReady.value = true
-})
 
-// 🔄 Init data når post ændrer sig (kun på client)
 watch(
   () => post.id,
   async (newId) => {
@@ -35,9 +30,19 @@ watch(
     liked.value = post.liked_by_me
 
     comments.value = await fetchComments()
-  },
-  { immediate: true }
+  }
 )
+
+const fetchLiked = async () => {
+  const res = await api(`/likes/me/${post.id}`)
+  return res.liked
+}
+
+const fetchLikeCount = async () => {
+  const res = await api(`/likes/count/${post.id}`)
+  return res.likes
+}
+
 
 const deletePost = async () => {
   await api(`/posts/${post.id}`, {
@@ -66,6 +71,16 @@ const toggleLike = async () => {
   liked.value = !liked.value
 }
 
+onMounted(async () => {
+  clientReady.value = true
+
+  if (post.id) {
+    comments.value = await fetchComments()
+    likes.value = await fetchLikeCount()
+    liked.value = await fetchLiked()
+  }
+})
+
 const sendComment = async () => {
   if (!newComment.value.trim()) return
 
@@ -77,9 +92,11 @@ const sendComment = async () => {
     }
   })
 
-  comments.value.push(comment)
+  comments.value = [...comments.value, comment]
+
   newComment.value = ''
 }
+
 </script>
 
 <template>

@@ -28,7 +28,7 @@ const createPost = async () => {
 <template>
   <div class="overlay" @click.self="emit('close')">
     <div class="modal">
-      <h2 >Opret post</h2>
+      <h2 style="color:black;">Opret post</h2>
       <input v-model="title" placeholder="Titel" />
       <textarea v-model="content" placeholder="Skriv noget..." rows="5"></textarea>
       <button @click="createPost">Post</button>

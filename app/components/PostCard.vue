@@ -14,30 +14,30 @@ const liked = ref(false)
 const comments = ref([])
 const newComment = ref('')
 const showDeleteModal = ref(false)
-
-
+const clientReady = ref(false)   // ✅ NY
 
 const fetchComments = async () => {
   return await api(`/comments/post/${post.id}`)
 }
 
-/* 🔄 Init data når post ændrer sig */
-let initialized = false
+// ✅ Vent til client er mounted (localStorage findes)
+onMounted(() => {
+  clientReady.value = true
+})
 
+// 🔄 Init data når post ændrer sig (kun på client)
 watch(
   () => post.id,
   async (newId) => {
-    if (!newId) return
+    if (!newId || !clientReady.value) return
 
     likes.value = post.likes
     liked.value = post.liked_by_me
 
-    comments.value = await fetchComments()   // 🔥 den mangler nu
+    comments.value = await fetchComments()
   },
   { immediate: true }
 )
-
-
 
 const deletePost = async () => {
   await api(`/posts/${post.id}`, {
@@ -66,19 +66,22 @@ const toggleLike = async () => {
   liked.value = !liked.value
 }
 
-
 const sendComment = async () => {
   if (!newComment.value.trim()) return
 
-  const comment = await api('/comments/', {
+  const comment = await api('/comments', {
     method: 'POST',
-    body: { post_id: post.id, content: newComment.value }
+    body: {
+      post_id: post.id,
+      content: newComment.value
+    }
   })
 
   comments.value.push(comment)
   newComment.value = ''
 }
 </script>
+
 <template>
   <div class="card">
     <div class="name-section">

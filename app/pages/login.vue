@@ -103,6 +103,8 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   margin: 30px;
+  position: relative;
+  z-index: 10;
   padding: 80px 60px;
   background: hotpink ;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -142,6 +144,12 @@ input {
   color: white;
   font-size: 1.5rem;
   padding: 50px;
+  position:relative;
+  z-index:1;
+    display: flex;
+  position: relative;
+  z-index: 20;
+  touch-action: manipulation;
 
 }
 

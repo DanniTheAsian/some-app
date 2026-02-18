@@ -77,6 +77,8 @@ const register = async () => {
       }
     })
 
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     await api('/me')
 
     await navigateTo('/dashboard')

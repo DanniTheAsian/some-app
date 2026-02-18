@@ -79,7 +79,7 @@ const login = async () => {
 </form>
     <div style="display: flex; flex-direction: column; gap:10px; margin-top: 40px;">
         <p style="text-align: center;">psssst har du ikke en bruger? </p>
-            <a class="link-create" href="/register">Opret dig her</a>
+            <a class="link-create" href="/register">Opret dig her!</a>
 
     </div>
   </div>

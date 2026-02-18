@@ -1,12 +1,19 @@
-export default defineNuxtRouteMiddleware((to) => {
-  if (process.server) return
+export default defineNuxtRouteMiddleware(async (to) => {
 
-  const token = localStorage.getItem('token')
+  const publicPages = ['/login', '/register']
 
-  const publicRoutes = ['/login', '/']
-  if (publicRoutes.includes(to.path)) return
+  if (publicPages.includes(to.path)) {
+    return
+  }
 
-  if (!token) {
+  // 🔥 STOP SSR FRA AT KALDE /me
+  if (process.server) {
+    return
+  }
+
+  try {
+    await api('/me')
+  } catch {
     return navigateTo('/login')
   }
 })

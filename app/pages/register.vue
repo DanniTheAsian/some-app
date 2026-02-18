@@ -53,39 +53,40 @@ const isValid = computed(() => {
 })
 
 const register = async () => {
-    if (!isValid.value) {
-        message.value = 'Udfyld alle felter'
-        return
-    }
+  if (!isValid.value) {
+    message.value = 'Udfyld alle felter'
+    return
+  }
 
-    loading.value = true
-    message.value = ''
+  loading.value = true
+  message.value = ''
 
-    try {
-        // 1️⃣ Opret bruger
-        await api('/register', {
-            method: 'POST',
-            body: form.value
-        })
-        play()
+  try {
+    await api('/register', {
+      method: 'POST',
+      body: form.value
+    })
 
-        // 2️⃣ Login automatisk (sætter cookie)
-        await api('/login', {
-            method: 'POST',
-            body: {
-                email: form.value.email,
-                password: form.value.password
-            }
-        })
+    play()
 
-        // 3️⃣ Gå til dashboard
-        await navigateTo('/dashboard')
+    await api('/login', {
+      method: 'POST',
+      body: {
+        identifier: form.value.email,
+        password: form.value.password
+      }
+    })
 
-    } catch(err) {
-        message.value = 'Registration failed'
-    } finally {
-        loading.value = false
-    }
+    await api('/me')
+
+    await navigateTo('/dashboard')
+
+  } catch (err) {
+    console.error('Register error:', err)
+    message.value = err?.data?.detail || 'Registration failed'
+  } finally {
+    loading.value = false
+  }
 }
 
 </script>

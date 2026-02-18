@@ -130,7 +130,7 @@ const register = async () => {
 
     <div>
         <p>Vent har du allerede en bruger? </p>
-            <a class="link-create" to="/login">login her</a>
+            <NuxtLink class="link-create" to="/login">login her</NuxtLink>
 
     </div>
   </div>

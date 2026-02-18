@@ -69,7 +69,7 @@ const register = async () => {
 
     play()
 
-    await api('/login', {
+    const res = await api('/login', {
       method: 'POST',
       body: {
         identifier: form.value.email,
@@ -77,7 +77,7 @@ const register = async () => {
       }
     })
 
-    await new Promise(resolve => setTimeout(resolve, 100))
+    localStorage.setItem('token', res.access_token)
 
     await api('/me')
 
@@ -90,6 +90,7 @@ const register = async () => {
     loading.value = false
   }
 }
+
 
 </script>
 
